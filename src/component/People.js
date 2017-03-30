@@ -1,32 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from './Header'
 import Menu from './Menu'
 import logo from '../logo.svg';
+import { connect } from 'react-redux'
+import { actionLoadPeople } from '../action/index'
 
-class People extends Component {
-  constructor(){
-    super()
-    this.state = {
-      datas:[]
-    }
+class People extends React.Component{
+  constructor(props){
+    super(props)
+
   }
   componentDidMount(){
     fetch(`https://swapi.co/api/people/`)
     .then(res => res.json())
-    .then(data => {
-      this.setState ({datas: data.results})
-
-    })
+    .then(data => this.props.loadPeople(data.results))
   }
   render() {
     return (
       <div className="People">
         <Header />
         <Menu />
-        {this.state.datas.length === 0 && <img src={logo} className="App-logo" alt="logo" />}
+        {this.props.people.length === 0 && <img src={logo} className="App-logo" alt="logo" />}
         <ul>
         {
-          this.state.datas.map((item,index)=>{
+          this.props.people.map((item,index)=>{
           return (
             <li key={index}><a>{item.name}</a></li>
               )
@@ -37,6 +34,18 @@ class People extends Component {
       </div>
     );
   }
+
+
 }
 
-export default People;
+const mapDispatchToProps = dispatch => ({
+  loadPeople: (data) => dispatch(actionLoadPeople(data))
+})
+
+const mapStateToProps = state => {
+  return {
+    people: state.people
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(People)

@@ -1,12 +1,11 @@
 import { combineReducers } from 'redux'
-import NewsReducers from './reducerNews'
-import PeopleReducers from './reducerPeople'
-import SearchNewsReducers from './reducerSearchNews'
+import { newsReducer } from './reducerNews'
+import { peopleReducer } from './reducerPeople'
+import SearchNewsReducer from './reducerSearchNews'
 
 const rootReducers = combineReducers({
-  news: NewsReducers,
-  people: PeopleReducers,
-  searchNews: SearchNewsReducers
+  news: newsReducer,
+  people: peopleReducer
 })
 
 export default rootReducers

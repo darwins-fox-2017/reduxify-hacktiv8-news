@@ -1,42 +1,43 @@
 import React, { Component } from 'react';
 import Form from './Form'
 import List from './List'
-import logo from '../logo.svg';
 import Header from './Header'
 import Menu from './Menu'
+import { connect } from 'react-redux'
+import { actionLoadNews } from '../action/index'
 
 class News extends Component {
-  constructor(){
-    super()
-    this.state = {
-      data:[],
-      search:""
-    }
+  constructor(props){
+    super(props)
+
   }
   componentDidMount(){
     fetch(`http://hn.algolia.com/api/v1/search?query=redux`)
     .then(res => res.json())
-    .then(data => this.setState ({data: data.hits}))
+    .then(data => this.props.loadNews(data.hits))
   }
   changeHandler(keyword){
-    this.setState({
-      search: keyword
-    })
-    fetch(`http://hn.algolia.com/api/v1/search?query=${this.state.search}`)
-    .then(res => res.json())
-    .then(data => this.setState ({data: data.hits}))
+    // this.setState({
+    //   search: keyword
+    // })
+    // fetch(`http://hn.algolia.com/api/v1/search?query=${this.state.search}`)
+    // .then(res => res.json())
+    // .then(data => this.props.loadNews(data))
   }
   render() {
     return (
       <div className="News">
         <Header />
         <Menu />
-        {this.state.data.length === 0 && <img src={logo} className="App-logo" alt="logo" />}
-        <List data={this.state.data} search={this.state.search} />
+        <List  />
         <Form changeHandler={(keyword)=>this.changeHandler(keyword)} />
       </div>
     )
   }
 }
 
-export default News;
+const mapDispatchToProps = (dispatch) => ({
+  loadNews: (data) => dispatch(actionLoadNews(data))
+})
+
+export default connect(null,mapDispatchToProps)(News);
