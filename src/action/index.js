@@ -11,3 +11,13 @@ export const actionLoadPeople = (data) => {
     payload:data
   }
 }
+
+export const actionSearchNews = (keyword,data) => {
+  return {
+    type: 'SEARCH_NEWS',
+    payload:{
+      keyword,
+      data
+    }
+  }
+}

@@ -17,12 +17,9 @@ class News extends Component {
     .then(data => this.props.loadNews(data.hits))
   }
   changeHandler(keyword){
-    // this.setState({
-    //   search: keyword
-    // })
-    // fetch(`http://hn.algolia.com/api/v1/search?query=${this.state.search}`)
-    // .then(res => res.json())
-    // .then(data => this.props.loadNews(data))
+    fetch(`http://hn.algolia.com/api/v1/search?query=${keyword}`)
+    .then(res => res.json())
+    .then(data => this.props.loadNews(data.hits))
   }
   render() {
     return (

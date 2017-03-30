@@ -1,9 +1,8 @@
-export const peopleReducer = (state = [{'name':'Didit'}], action) =>
+export const peopleReducer = (state = [], action) =>
 {
   switch (action.type) {
     case 'LOAD_PEOPLE':
       return action.payload
-      break;
     default:
       return state
   }
